@@ -33,7 +33,7 @@ Bibliotecas, aplicações e frameworks utilizados:
 
 Funcionalidades:
 
-<h2> - IMPORTANTE: Antes de rodar o projeto, criar um arquivo .env para a configuração das variáveis de ambientes utilizadas: </h2>
+<h2> IMPORTANTE: Antes de rodar o projeto, criar um arquivo .env para a configuração das variáveis de ambientes utilizadas: </h2>
 <blockquote>
   
   DB_NAME = "Nome do banco de dados"
@@ -45,6 +45,18 @@ Funcionalidades:
   DB_PORT = "Porta que irá rodar o banco de dados"
   
   DB_PASSWORD = "Senha do banco de dados"
+
+  CONFIGURAÇÕES RECOMENDADAS:
+  
+  DB_NAME = blogDB
+  
+  DB_USER = postgres
+  
+  DB_HOST = localhost 
+  
+  DB_PORT = 5432
+  
+  DB_PASSWORD = 12345678
 
 </blockquote>
 
