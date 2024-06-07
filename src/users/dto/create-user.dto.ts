@@ -9,11 +9,11 @@ import {
   
     id: number;
 
-    @MaxLength(191, {
-      message: 'O endereço de email deve ter menos de 200 caracteres',
+    @MaxLength(100, {
+      message: 'O nome de usuário deve ter menos de 100 caracteres',
     })
     @IsNotEmpty({
-      message: 'Informe um endereço de email',
+      message: 'Informe um endereço de usuário',
     })
     name: string;
   
@@ -23,9 +23,8 @@ import {
         message: 'Informe um endereço de email válido (exemplo@email.com)',
       },
     )
-
-    @MaxLength(100, {
-      message: 'O endereço de email deve ter menos de 200 caracteres',
+    @MaxLength(191, {
+      message: 'O endereço de email deve ter menos de 191 caracteres',
     })
     @IsNotEmpty({
       message: 'Informe um endereço de email',

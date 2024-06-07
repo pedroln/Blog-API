@@ -61,25 +61,23 @@ export class PostsService {
     const postComments = await this.commentRepository.find()
 
 
-    if (postComments) {
-      for (let index in postComments) {
-        if (postComments[index].postId == foundPost.id) {
-          this.CommentsService.delete(req, postComments[index].id)
-        }
-      }
-    }
-
-
     if (!foundPost) {
       throw new HttpException('Post com o ID para deletar inexistente', HttpStatus.NOT_FOUND);
     }
-
 
     else if (foundPost.userId !== loggedUser.user_id) {
       throw new HttpException('Usuário logado não é o criador da postagem, não foi possível apagá-la', HttpStatus.BAD_REQUEST);
     }
 
+    if (postComments) {
+      for (let index in postComments) {
+        if (postComments[index].postId == foundPost.id) {
+          await this.CommentsService.delete(req, postComments[index].id)
+        }
+      }
+    }
 
+    
     const deletedPost = foundPost
     await this.postRepository.delete(id)
 
@@ -87,6 +85,8 @@ export class PostsService {
       deletedPost,
       message: 'Post deletado com sucesso',
     }
+
+
   }
 
   async update(req, id: number, updatePostDto: UpdatePostDto): Promise<ReturnUpdatedPostDto> {

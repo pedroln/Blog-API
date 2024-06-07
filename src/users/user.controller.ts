@@ -14,14 +14,33 @@ export class UsersController {
     private authService: AuthService
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAllUsers();
   }
 
-  @Post()
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
+  }
+
+  @Post('createUser')
   create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
+  }
+  
+  @UseGuards(JwtAuthGuard)
+  @Put('updateUser/:id')
+  update(@Req() req, @Param('id') id: string, @Body(ValidationPipe) updatePostDto : UpdateUserDto) {
+    return this.usersService.update(req, +id, updatePostDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('deleteUser/:id')
+  delete(@Req() req, @Param('id') id: string) {
+    return this.usersService.delete(req, +id);
   }
 
   @UseGuards(LocalAuthGuard)
@@ -30,19 +49,6 @@ export class UsersController {
     const token = (await this.authService.login(req.user)).access_token
     this.usersService.createLoggedUser(req.user,token)
     return this.authService.login(req.user);
-  }
-
-  
-  @UseGuards(JwtAuthGuard)
-  @Put(':id')
-  update(@Req() req, @Param('id') id: string, @Body(ValidationPipe) updatePostDto : UpdateUserDto) {
-    return this.usersService.update(req, +id, updatePostDto);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  delete(@Req() req, @Param('id') id: string) {
-    return this.usersService.delete(req, +id);
   }
 
 

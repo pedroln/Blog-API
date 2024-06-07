@@ -9,29 +9,32 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 export class CommentsController {
   constructor(private readonly CommentsService: CommentsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.CommentsService.findAllComment();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.CommentsService.findOne(+id);
   }
 
-  @Post(':id')
+  @UseGuards(JwtAuthGuard)
+  @Post('createComment/:id')
   create(@Req() req, @Param('id') id: string, @Body(ValidationPipe) createCommentDto: CreateCommentDto) {
     return this.CommentsService.create(req, +id, createCommentDto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
+  @Delete('deleteComment/:id')
   delete(@Req() req, @Param('id') id: string) {
     return this.CommentsService.delete(req, +id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(':id')
+  @Put('updateComment/:id')
   update(@Req() req, @Param('id') id: string, @Body(ValidationPipe) updateCommentDto : UpdateCommentDto) {
     return this.CommentsService.update(req, +id, updateCommentDto);
   }
