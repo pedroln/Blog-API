@@ -33,7 +33,7 @@ Bibliotecas, aplicações e frameworks utilizados:
 
 Funcionalidades:
 
-<h4> - IMPORTANTE: Antes de rodar o projeto, criar um arquivo .env para a configuração das variáveis de ambientes utilizadas: </h4>
+<h2> - IMPORTANTE: Antes de rodar o projeto, criar um arquivo .env para a configuração das variáveis de ambientes utilizadas: </h2>
 <blockquote>
   
   DB_NAME = "Nome do banco de dados"
