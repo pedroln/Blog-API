@@ -8,6 +8,8 @@ import { LoggedUser } from './entities/loggedUser.entity';
 import { ReturnDeletedUserDto } from './dto/return-deleted-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ReturnUpdatedUserDto } from './dto/return-updated-user.dto';
+import { Post } from 'src/posts/entities/posts.entity';
+import { PostsService } from 'src/posts/posts.service';
 
 
 @Injectable()
@@ -15,7 +17,10 @@ export class UsersService {
 
     constructor(
         @InjectRepository(User) private readonly userRepository: Repository<User>,
-        @InjectRepository(LoggedUser) private readonly loggedUserRepository: Repository<LoggedUser>
+        @InjectRepository(LoggedUser) private readonly loggedUserRepository: Repository<LoggedUser>,
+        @InjectRepository(Post) private readonly postRepository: Repository<Post>,
+        private readonly postsService: PostsService
+
     ) { }
 
     async findAllUsers(): Promise<User[]> {
@@ -50,11 +55,20 @@ export class UsersService {
         const authKey = req.headers.authorization;
         const loggedUser = await this.loggedUserRepository.findOne({ where: { token: authKey } })
         const foundUser = await this.userRepository.findOne({ where: { id: id } })
+        const foundPost = await this.postRepository.find()
 
 
         if (!foundUser) {
             throw new HttpException('Usuário com o ID para deletar inexistente', HttpStatus.NOT_FOUND);
         }
+
+        if (foundPost) {
+            for (let index in foundPost) {
+              if (foundPost[index].userId == foundUser.id) {
+                this.postsService.delete(req, foundPost[index].id)
+              }
+            }
+          }
 
 
         else if (foundUser.id !== loggedUser.user_id) {

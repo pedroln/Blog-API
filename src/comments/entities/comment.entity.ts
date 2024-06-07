@@ -1,9 +1,10 @@
+import { Post } from 'src/posts/entities/posts.entity';
 import { User } from 'src/users/entities/User.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 
 @Entity()
-export class Post {
+export class Comment {
     @PrimaryGeneratedColumn()
     id: number;
   
@@ -13,8 +14,11 @@ export class Post {
     @Column({type: "uuid"})
     userId:number;
 
-    @Column({ type: 'varchar', length: 100 })
-    title: string;
+    @ManyToOne(type => Post, (user) => user.id)
+    post: Post;
+
+    @Column({type: "uuid"})
+    postId:number;
 
     @Column({ type: 'varchar', length: 200 })
     description: string;
