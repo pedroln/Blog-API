@@ -15,7 +15,7 @@ export class UpdatePostDto {
 
 
     @MaxLength(100, {
-        message: 'O titulo deve ter menos de 200 caracteres',
+        message: 'O titulo deve ter menos de 100 caracteres',
     })
     @IsOptional()
     title: string;

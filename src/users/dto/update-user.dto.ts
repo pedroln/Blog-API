@@ -10,8 +10,8 @@ import {
   
     id: number;
 
-    @MaxLength(191, {
-      message: 'O endereço de email deve ter menos de 200 caracteres',
+    @MaxLength(100, {
+      message: 'O nome de usuário deve ter menos de 100 caracteres',
     })
     @IsOptional()
     name: string;
@@ -23,8 +23,8 @@ import {
       },
     )
 
-    @MaxLength(100, {
-      message: 'O endereço de email deve ter menos de 200 caracteres',
+    @MaxLength(191, {
+      message: 'O endereço de email deve ter menos de 191 caracteres',
     })
     @IsOptional()
 

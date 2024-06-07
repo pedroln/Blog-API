@@ -14,7 +14,7 @@ export class CreatePostDto {
 
 
     @MaxLength(100, {
-        message: 'O titulo deve ter menos de 200 caracteres',
+        message: 'O titulo deve ter menos de 100 caracteres',
     })
     @IsNotEmpty({
         message: 'Informe um titulo',
@@ -23,7 +23,7 @@ export class CreatePostDto {
 
 
     @IsNotEmpty({
-        message: 'Informe um titulo',
+        message: 'Informe uma descrição',
     })
     description: string;
 

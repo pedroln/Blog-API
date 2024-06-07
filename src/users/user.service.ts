@@ -31,10 +31,8 @@ export class UsersService {
         var repeatedEmail = false;
 
         const users = await this.findAllUsers();
-        console.log(users)
 
         for (let index in users) {
-            console.log(users[index].email)
             if (users[index].email == createUserDto.email) {
                 repeatedEmail = true;
             }
@@ -62,18 +60,17 @@ export class UsersService {
             throw new HttpException('Usuário com o ID para deletar inexistente', HttpStatus.NOT_FOUND);
         }
 
-        if (foundPost) {
-            for (let index in foundPost) {
-              if (foundPost[index].userId == foundUser.id) {
-                this.postsService.delete(req, foundPost[index].id)
-              }
-            }
-          }
-
-
         else if (foundUser.id !== loggedUser.user_id) {
             throw new HttpException('Usuário logado não é o dono da conta, não foi possível apagar sua conta', HttpStatus.BAD_REQUEST);
         }
+
+        if (foundPost) {
+            for (let index in foundPost) {
+              if (foundPost[index].userId == foundUser.id) {
+                await this.postsService.delete(req, foundPost[index].id)
+              }
+            }
+          }
 
 
         const deletedUser = foundUser
@@ -117,7 +114,6 @@ export class UsersService {
         const loggedUser = new LoggedUser()
         loggedUser.user_id = user.id
         loggedUser.token = token
-        console.log(await this.loggedUserRepository.save(loggedUser))
         this.loggedUserRepository.save(loggedUser)
     }
 
