@@ -27,6 +27,10 @@ export class UsersService {
         return await this.userRepository.find();
     }
 
+    async findOne(id: number): Promise<User> {
+        return await this.userRepository.findOne({ where: { id } })
+      }
+
     async create(createUserDto: CreateUserDto): Promise<ReturnUserDto> {
         var repeatedEmail = false;
 

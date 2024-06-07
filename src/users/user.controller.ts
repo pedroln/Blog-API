@@ -14,9 +14,16 @@ export class UsersController {
     private authService: AuthService
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAllUsers();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
   }
 
   @Post('createUser')

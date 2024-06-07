@@ -9,11 +9,13 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 export class CommentsController {
   constructor(private readonly CommentsService: CommentsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.CommentsService.findAllComment();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.CommentsService.findOne(+id);

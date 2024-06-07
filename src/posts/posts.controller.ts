@@ -9,16 +9,19 @@ import { UpdatePostDto } from './dto/update-post.dto';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.postsService.findAllPost();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.postsService.findOne(+id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('createPost')
   create(@Req() req, @Body(ValidationPipe) createPostDto: CreatePostDto) {
     return this.postsService.create(req, createPostDto);
