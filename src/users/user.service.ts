@@ -28,7 +28,11 @@ export class UsersService {
     }
 
     async findOne(id: number): Promise<User> {
-        return await this.userRepository.findOne({ where: { id } })
+        const foundUser = await this.userRepository.findOne({ where: { id } });
+        if (!foundUser){
+            throw new HttpException('Usuário com o ID para pesquisar inexistente', HttpStatus.NOT_FOUND);
+        }
+        return foundUser
       }
 
     async create(createUserDto: CreateUserDto): Promise<ReturnUserDto> {

@@ -28,7 +28,11 @@ export class CommentsService {
   }
 
   async findOne(id: number): Promise<Comment> {
-    return await this.commentRepository.findOne({ where: { id } })
+    const foundComment = await this.commentRepository.findOne({ where: { id } });
+    if (!foundComment){
+        throw new HttpException('Comentário com o ID para pesquisar inexistente', HttpStatus.NOT_FOUND);
+    }
+    return foundComment
   }
 
   async create(req, postId: number, createCommentDto: CreateCommentDto): Promise<ReturnCommentDto> {

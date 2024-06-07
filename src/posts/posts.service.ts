@@ -30,7 +30,11 @@ export class PostsService {
   }
 
   async findOne(id: number): Promise<Post> {
-    return await this.postRepository.findOne({ where: { id } })
+    const foundPost= await this.postRepository.findOne({ where: { id } });
+    if (!foundPost){
+        throw new HttpException('Postagem com o ID para pesquisar inexistente', HttpStatus.NOT_FOUND);
+    }
+    return foundPost
   }
 
   async create(req, createPostDto: CreatePostDto): Promise<ReturnPostDto> {
